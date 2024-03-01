@@ -15,3 +15,4 @@ use App\Http\Controllers\Api\UserController;
 */
 
 Route::post('users/register', [UserController::class, 'store']);
+Route::post('users/login', [UserController::class, 'login']);
