@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,9 +18,12 @@ class BookFactory extends Factory
     public function definition(): array
     {
         return [
+            'user_id' => User::inRandomOrder()->first(),
             'title' => $this->faker->name(),
             'author' => $this->faker->name(),
             'price' => $this->faker->numberBetween(2000, 10000),
+            'publication_date' => now()->subDays(rand(1, 10)),
+            'description' => $this->faker->paragraph(5),
         ];
     }
 }

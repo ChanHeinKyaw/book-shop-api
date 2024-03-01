@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\BookController;
 use App\Http\Controllers\Api\UserController;
 
 /*
@@ -16,3 +17,5 @@ use App\Http\Controllers\Api\UserController;
 
 Route::post('users/register', [UserController::class, 'store']);
 Route::post('users/login', [UserController::class, 'login']);
+
+Route::post('books', [BookController::class, 'index']);
