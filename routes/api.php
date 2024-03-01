@@ -19,4 +19,5 @@ Route::post('users/register', [UserController::class, 'store']);
 Route::post('users/login', [UserController::class, 'login']);
 
 Route::get('books', [BookController::class, 'index']);
+Route::get('books/search', [BookController::class, 'search']);
 Route::get('books/{book}', [BookController::class, 'show']);
