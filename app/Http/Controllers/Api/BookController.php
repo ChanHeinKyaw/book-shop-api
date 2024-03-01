@@ -23,4 +23,15 @@ class BookController extends Controller
             'book' => $book,
         ]);
     }
+
+    public function search(){
+        $books = Book::with('user:id,name,email')
+                    ->filter(request(['search']))
+                    ->select('title','author','price','user_id')
+                    ->get();
+
+        return response()->json([
+            'book' => $books,
+        ]);
+    }
 }
