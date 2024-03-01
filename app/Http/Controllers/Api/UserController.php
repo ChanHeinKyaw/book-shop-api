@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Api;
 use Throwable;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -30,5 +32,21 @@ class UserController extends Controller
                 'message' => 'User registration fail',
             ], 500);
         }
+    }
+
+    public function login(LoginRequest $request){
+        $user = User::where(['email' => $request->email])->first();
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            throw ValidationException::withMessages([
+                'email' => 'These credentials do not match our records.',
+            ]);
+        }
+
+        $token = $user->createToken($request->email)->accessToken;
+
+        return response()->json([
+            'token' => $token,
+            'user' => $user->only('id', 'name', 'email'),
+        ]);
     }
 }
