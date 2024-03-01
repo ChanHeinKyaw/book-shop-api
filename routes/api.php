@@ -18,4 +18,5 @@ use App\Http\Controllers\Api\UserController;
 Route::post('users/register', [UserController::class, 'store']);
 Route::post('users/login', [UserController::class, 'login']);
 
-Route::post('books', [BookController::class, 'index']);
+Route::get('books', [BookController::class, 'index']);
+Route::get('books/{book}', [BookController::class, 'show']);
