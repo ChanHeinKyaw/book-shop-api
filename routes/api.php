@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\BookController;
+use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\UserController;
 
 /*
@@ -18,6 +19,10 @@ use App\Http\Controllers\Api\UserController;
 Route::post('users/register', [UserController::class, 'store']);
 Route::post('users/login', [UserController::class, 'login']);
 
-Route::get('books', [BookController::class, 'index']);
-Route::get('books/search', [BookController::class, 'search']);
-Route::get('books/{book}', [BookController::class, 'show']);
+Route::middleware('auth:api')->group(function (){
+    Route::get('books', [BookController::class, 'index']);
+    Route::get('books/search', [BookController::class, 'search']);
+    Route::get('books/{book}', [BookController::class, 'show']);
+    
+    Route::post('cart/add', [CartController::class,'store']);
+});
