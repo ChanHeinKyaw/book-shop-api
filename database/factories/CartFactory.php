@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Book;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,9 @@ class CartFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id' => User::inRandomOrder()->first(),
+            'book_id' => Book::inRandomOrder()->first(),
+            'quantity' => rand(1,10),
         ];
     }
 }
