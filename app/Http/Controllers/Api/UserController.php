@@ -53,4 +53,12 @@ class UserController extends Controller
             'user' => $user->only('id', 'name', 'email'),
         ]);
     }
+
+    public function profile($id) {
+        $user = User::with('orders.cart.user', 'orders.cart.book')->where('id',$id)->get();
+
+        return response()->json([
+            'user' => $user,
+        ]);
+    }   
 }
