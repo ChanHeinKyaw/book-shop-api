@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
 use Illuminate\Validation\ValidationException;
@@ -42,7 +43,10 @@ class UserController extends Controller
             ]);
         }
 
-        $token = $user->createToken($request->email)->accessToken;
+        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+            $user = auth()->user();
+            $token = $user->createToken($user->email)->accessToken;
+        }
 
         return response()->json([
             'token' => $token,
