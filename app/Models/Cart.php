@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Book;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Cart extends Model
 {
@@ -14,4 +16,16 @@ class Cart extends Model
         'book_id',
         'quantity'
     ];
+
+    public function book(){
+        return $this->belongsTo(Book::class);
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function order(){
+        return $this->hasOne(Order::class);
+    }
 }

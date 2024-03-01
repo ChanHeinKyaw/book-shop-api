@@ -24,5 +24,6 @@ Route::middleware('auth:api')->group(function (){
     Route::get('books/search', [BookController::class, 'search']);
     Route::get('books/{book}', [BookController::class, 'show']);
     
+    Route::get('cart/{user_id}', [CartController::class,'index']);
     Route::post('cart/add', [CartController::class,'store']);
 });
