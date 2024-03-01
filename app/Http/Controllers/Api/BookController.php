@@ -16,4 +16,11 @@ class BookController extends Controller
             'books' => $books
         ]);
     }
+
+    public function show(Book $book){
+        $book = $book->with('user:id,name,email')->first();
+        return response()->json([
+            'book' => $book,
+        ]);
+    }
 }
