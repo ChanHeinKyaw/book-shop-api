@@ -27,5 +27,5 @@ Route::middleware('auth:api')->group(function (){
     Route::get('cart/{user_id}', [CartController::class,'index']);
     Route::post('cart/add', [CartController::class,'store']);
     Route::put('cart/update', [CartController::class,'update']);
-
+    Route::delete('cart/remove',[CartController::class,'delete']);
 });
