@@ -12,8 +12,8 @@ class CartController extends Controller
 {
     public function index($userId){
         $cart = Cart::with('user','book')
-                ->where('user_id',$userId)
-                ->whereDoesntHave('order')
+                ->whereUserId($userId)
+                ->whereStatus('pending')
                 ->get();
 
         return response()->json([
@@ -22,11 +22,21 @@ class CartController extends Controller
     }
 
     public function store(CartStoreRequest $request){
-        $cart = Cart::create([
-            'user_id' => auth()->id(),
-            'book_id' => $request->book_id,
-            'quantity' => $request->quantity,
-        ]);
+        $checkCart = Cart::whereUserId(auth()->id())
+                        ->whereBookId($request->book_id)
+                        ->whereStatus('pending')
+                        ->exists();
+        if($checkCart){
+            return response()->json([
+                'message' => "This Book is Already Add To Cart",
+            ]);
+        }else{
+            $cart = Cart::create([
+                'user_id' => auth()->id(),
+                'book_id' => $request->book_id,
+                'quantity' => $request->quantity,
+            ]);
+        }
         
         return response()->json([
             'cart' => $cart,
@@ -34,22 +44,30 @@ class CartController extends Controller
     }
 
     public function update(CartUpdateRequest $request){
-        $cart = Cart::latest()->where('user_id', auth()->id())
-                    ->where('book_id', $request->book_id)
+        $cart = Cart::whereUserId(auth()->id())
+                    ->whereBookId($request->book_id)
+                    ->whereStatus('pending')
                     ->first();
-        
-        $cart->update([
-            'quantity' => $request->quantity,
-        ]);
 
+        if($cart){
+            $cart->update([
+                'quantity' => $request->quantity,
+            ]);
+        }else{
+            return response()->json([
+                'message' => "Record Not Found",
+            ]);
+        }
+        
         return response()->json([
             'cart' => $cart,
         ]);
     }
 
     public function delete(Request $request){
-        $cart = Cart::latest()->where('user_id', auth()->id())
-                    ->where('book_id', $request->book_id)
+        $cart = Cart::whereUserId(auth()->id())
+                    ->whereBookId($request->book_id)
+                    ->whereStatus('pending')
                     ->first();
 
         if($cart){
