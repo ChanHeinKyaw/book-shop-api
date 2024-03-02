@@ -18,10 +18,12 @@ class CartFactory extends Factory
      */
     public function definition(): array
     {
+        $status = ["pending","complete"];
         return [
             'user_id' => User::inRandomOrder()->first(),
             'book_id' => Book::inRandomOrder()->first(),
             'quantity' => rand(1,10),
+            'status' => $status[rand(0,1)],
         ];
     }
 }

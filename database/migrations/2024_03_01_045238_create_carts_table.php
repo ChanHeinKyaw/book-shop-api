@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('book_id')->constrained()->cascadeOnDelete();
             $table->bigInteger('quantity');
+            $table->enum('status',["pending","complete"])->default('pending');
             $table->timestamps();
         });
     }
