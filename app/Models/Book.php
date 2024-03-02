@@ -23,4 +23,9 @@ class Book extends Model
             });
         });
     }
+
+    public function wishListUsers()
+    {
+        return $this->belongsToMany(User::class, 'wish_lists', 'book_id', 'user_id');
+    }
 }

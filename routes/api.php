@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\BookController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\WishListController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,10 +25,15 @@ Route::middleware('auth:api')->group(function (){
     Route::get('books/search', [BookController::class, 'search']);
     Route::get('books/{book}', [BookController::class, 'show']);
     
-    Route::get('cart/{user_id}', [CartController::class,'index']);
-    Route::post('cart/add', [CartController::class,'store']);
-    Route::put('cart/update', [CartController::class,'update']);
-    Route::delete('cart/remove',[CartController::class,'delete']);
+    Route::get('cart/{user_id}', [CartController::class, 'index']);
+    Route::post('cart/add', [CartController::class, 'store']);
+    Route::put('cart/update', [CartController::class, 'update']);
+    Route::delete('cart/remove',[CartController::class, 'delete']);
 
-    Route::get('users/{user_id}',[UserController::class,'profile']);
+    Route::get('users/{user_id}',[UserController::class, 'profile']);
+
+    Route::get('wishlist',[WishListController::class, 'index']);
+    Route::post('wishlist/{book_id}',[WishListController::class, 'store']);
+    Route::delete('wishlist/{book_id}',[WishListController::class, 'delete']);
+
 });
