@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\BookController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\WishListController;
 
 /*
@@ -36,4 +37,5 @@ Route::middleware('auth:api')->group(function (){
     Route::post('wishlist/{book_id}',[WishListController::class, 'store']);
     Route::delete('wishlist/{book_id}',[WishListController::class, 'delete']);
 
+    Route::post('orders/checkout', [OrderController::class, 'checkout']);
 });
